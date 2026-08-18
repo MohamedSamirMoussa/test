@@ -1,0 +1,43 @@
+:root {
+  --bg-header: #333;
+  --bg-header-selection: #33333373;
+  --bg-main: #fff;
+  --bg-card: #7a1414b6;
+  --font-color1: #fff;
+  --font-color2: #000;
+  --font-type: sans-serif;
+  --font-size: 0.7rem;
+}
+
+.custom_header table thead tr {
+  background-color: var(--bg-header) !important;
+  padding: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.custom_header table thead tr th {
+  font-size: var(--font-size);
+  font-family: var(--font-type);
+  color: var(--font-color1) !important;
+  text-align: center;
+}
+.custom_header table thead tr th.table-active {
+  background-color: var(--bg-header-selection) !important;
+}
+.custom_header table thead tr th:hover {
+  background-color: var(--bg-header-selection) !important;
+}
+
+
+.o_field_widget .o_input {
+    background-color: #ffffff !important;
+    border: 1 solid #333;
+}
+
+.o_field_widget .o_input:hover {
+    box-shadow: ;
+}

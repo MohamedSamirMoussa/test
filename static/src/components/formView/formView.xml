@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="app_one.FormView">
+        <div class="modal fade show d-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.5);">
+            <div class="position-fixed w-50 shadow-lg p-3 mx-auto card" t-on-click.stop="">
+                <div class="header">
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label class="mx-2">Name</label>
+                            <input class="form-control" t-model="state.name" placeholder="Input Property Name" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Postcode</label>
+                            <input class="form-control" t-model="state.post_code" placeholder="Input Property Postcode" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Date Availability</label>
+                            <input class="form-control" type="date" t-model="state.date_availability" placeholder="Input Property Date Availability" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >State</label>
+                            <input class="form-control" t-model="state.state" placeholder="Input Property State" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Garden</label>
+                            <input class="form-check-input" type="checkbox" t-model="state.garden" placeholder="Input Property Garden" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Garage</label>
+                            <input class="form-check-input" type="checkbox" t-model="state.garage" placeholder="Input Property Garage" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Selling Price</label>
+                            <input class="form-control" t-model="state.selling_price" placeholder="Input Property Selling Price" />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="mb-3">
+                            <label >Garden Orientation</label>
+                            <input class="form-control" t-model="state.garden_orientation" placeholder="Input Property Garden Orientation" />
+                        </div>
+                    </div>
+                </div>
+                <div class="footer d-flex justify-content-end">
+                    <button class="btn btn-primary mx-3" t-on-click="this.createRecord">
+                Save
+                    </button>
+                    <button class="btn btn-danger" t-on-click="this.close">
+                Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

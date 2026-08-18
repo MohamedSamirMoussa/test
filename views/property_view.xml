@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Actions -->
+    <record id="property_action" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="property_list_view_action" model="ir.actions.client">
+        <field name="name">Property List View</field>
+        <field name="tag">app_one.action_list_view</field>
+    </record>
+
+    <!-- Closed Action -->
+    <record id="property_closed_server_action" model="ir.actions.server">
+        <field name="name">Closed</field>
+        <field name="model_id" ref="model_property" />
+        <field name="binding_model_id" ref="model_property" />
+        <field name="state">code</field>
+        <field name="code">
+            action = record.action_closed()
+        </field>
+    </record>
+
+    <record id="change_state_server_action" model="ir.actions.server">
+        <field name="name">Change State</field>
+        <field name="model_id" ref="model_property" />
+        <field name="binding_model_id" ref="model_property" />
+        <field name="state">code</field>
+        <field name="code">
+            action = record.open_change_state()
+        </field>
+    </record>
+
+    <!-- Automated Action -->
+    <record id="check_selling_date_action" model="ir.cron">
+        <field name="name">Property : Check Selling Date</field>
+        <field name="model_id" ref="model_property" />
+        <field name="state">code</field>
+        <field name="code">
+            model._check_selling_price()
+        </field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Content inside drop-menu -->
+    <menuitem id="property_menu_item" name="Properties" parent="properties_menu" action="property_action" />
+
+
+    <menuitem id="property_list_view_item" name="Properties OWL" parent="properties_menu" action="property_list_view_action" />
+    <!-- List View -->
+    <record id="property_view_list" model="ir.ui.view">
+        <field name="name">property list</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <list class='custom_header' decoration-info="(is_late)">
+                <header>
+                    <button name="property_xlsx_report" type="object" string="Print Your Lead" class="btn-primary" />
+                </header>
+                <field name="name" />
+                <field name="owner_name" />
+                <field 
+                name="state"
+                widget="badge"
+                decoration-info="state == draft"
+                decoration-warning="state == in_progress"
+                decoration-danger="field == cancelled"
+                decoration-success="field == completed"
+                />
+                <field name="description" />
+                <field name="is_late" invisible="1" />
+                <field name="post_code" />
+                <field name="bedrooms" />
+                <field name="facades" />
+                <field name="garage" />
+                <field name="garden" />
+                <field name="selling_price" />
+                <field name="expected_price" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="property_view_search" model="ir.ui.view">
+        <field name="name">property search</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="post_code" />
+                <filter name="group_garden" string="Garden Group" context="{'group_by':'garden'}" />
+                <filter name="is_garden" string="With Garden" domain="[('garden', '=', True)]" />
+                <filter name="is_garage" string="With Garage" domain="[('garage', '=', True)]" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="property_view_form" model="ir.ui.view">
+        <field name="name">property form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form>
+                <style>
+                    .o_web_ribbon {
+                        z-index: 9999 !important;
+                    }
+                </style>
+                <sheet class="mx-auto">
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-primary" invisible="active == True" />
+                    <!-- <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold'" />
+                    <widget name="web_ribbon" title="Pending" bg_color="text-bg-warning" invisible="state != 'pending'" />
+                    <widget name="web_ribbon" title="Draft" bg_color="text-bg-secondary" invisible="state != 'draft'" />
+                    <widget name="web_ribbon" title="Draft" bg_color="text-bg-danger" invisible="state != 'closed'" /> -->
+                    <header>
+                        <button name="action_pending" string="Pending" type="object" class="btn-secondary" invisible="state != 'draft'" />
+
+                        <button name="action_sold" string="Sold" type="object" class="btn-danger" invisible="state != 'pending'" />
+
+                        <button name="action_draft" string="Draft" type="object" class="btn-primary" invisible="state != 'pending'" />
+                        <field name="state" widget='statusbar' />
+                    </header>
+                    <div class="card p-3 shadow-lg rounded-4">
+                        <group col="2">
+
+                            <group string="Description" class="text-success">
+                                <field name="name" />
+                                <field name="ref" invisible="ref == 'new'" />
+                                <field name="description" />
+                                <field name="post_code" required="True" />
+                                <field name="owner_id" />
+                                <field name="owner_name" />
+                                <field name="owner_phone" />
+                                <field name="owner_address" />
+                            </group>
+
+                            <group string="Info">
+                                <field name="date_availability" />
+                                <field name="expected_selling_date" />
+                                <field name="is_late" invisible="1" />
+                                <field name="bedrooms" />
+                                <field name="facades" required="True" />
+                                <field name="garage" widget='boolean_toggle' />
+                                <field name="garden" widget='boolean_toggle' />
+                                <field name="garden_orientation" invisible="garden == False" />
+                                <field name="garage_area" invisible="garage == False" />
+                                <field name="garden_area" invisible="garden == False" />
+                                <field name="total_area" invisible="total_area == 0" />
+                                <field name="active" />
+                            </group>
+
+                        </group>
+
+                        <group string="Price" col="2">
+                            <field name="selling_price" />
+                            <field name="expected_price" />
+                        </group>
+                    </div>
+
+                    <div>
+                        <h1 class="text-warning py-3 fs-2">Calculate Total Area :</h1>
+                        <notebook>
+
+                            <page string="Rooms">
+                                <field name="room_ids">
+                                    <list editable="bottom">
+                                        <field name="room_name" />
+                                        <field name="width" />
+                                        <field name="height" />
+                                        <field name="area" />
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+
+                        <group>
+                            <field name="total_area" />
+                        </group>
+                    </div>
+
+                </sheet>
+                <chatter class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </chatter>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="property_sequence" model="ir.sequence">
+        <field name="name">Property Seq.</field>
+        <field name="code">property_seq</field>
+        <field name="prefix">PRTP</field>
+        <field name="padding">4</field>
+    </record>
+
+</odoo>

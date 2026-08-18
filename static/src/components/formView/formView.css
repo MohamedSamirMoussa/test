@@ -1,0 +1,4 @@
+.card {
+    z-index: 999 !important;
+    overflow-y: auto;
+}

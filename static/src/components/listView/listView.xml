@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="app_one.ListView">
+        <div class="container w-75 mx-auto">
+            <h1 class="fs-2 font-bold py-5">Hello To Properties</h1>
+            <button class="btn btn-primary" t-on-click="toggleViewForm">
+                <t t-if="state.showPropertyForm">Close</t>
+                <t t-else="">New</t>
+            </button>
+            <t t-if="state.showPropertyForm">
+                <FormView onClose="toggleViewForm.bind(this)" />
+            </t>
+            <div class="index row row-col-3 g-3">
+                <t t-foreach="state.records" t-as="record" t-key="record.id">
+                    <div class="col">
+                        <div class="card shadow-lg my-2 ">
+                            <div class="inner p-3">
+                                <div class="header d-flex justify-content-between">
+                                    <h1 class="fs-2">Property name: <t t-esc="record.name"></t>
+                                    </h1>
+                                    <button class="btn btn-danger" t-on-click="()=> deleteRecord(record.id)">
+                                Delete <t t-esc="record.name" />
+                                    </button>
+                                </div>
+                                <div class="body row row-cols-2">
+                                    <div class="info-property col-6 d-flex flex-column">
+                                        <h2 class="text-muted fs-3">Info</h2>
+                                        <span>
+                                Post Code :<t t-esc="record.post_code" />
+                                        </span>
+                                        <span>
+                                Building Number :<t t-esc="record.ref" />
+                                        </span>
+                                        <span>
+                                State :<t t-esc="record.state" />
+                                        </span>
+                                        <span>
+                                Garden :<t t-esc="record.garden" />
+                                        </span>
+                                        <span>
+                                Garage :<t t-esc="record.garage" />
+                                        </span>
+                                        <span>
+                                Date Availability :<t t-esc="record.date_availability" />
+                                        </span>
+                                        <span>
+                                Selling Price :<t t-esc="record.selling_price" />
+                                        </span>
+                                        <span>
+                                Garden Orientation :<t t-esc="record.garden_orientation" />
+                                        </span>
+                                    </div>
+                                    <div class="owner-info col-6 d-flex flex-column">
+                                        <h2 class="fs-3 text-muted">Owner Info</h2>
+                                        <span>
+                                Name :<t t-esc="record.owner_name" />
+                                        </span>
+                                        <span>
+                                Phone :<t t-esc="record.owner_phone" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

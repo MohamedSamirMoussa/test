@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_property" />
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+    </record>
+
+
+    <template id="property_report_template" name="Property Report Template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <h1 class="text-center fs-1 fw-bolder">Property Report</h1>
+                    <table class="table table-bordered mt-4">
+                        <thead class="thead-light">
+                            <th class="text-center fs-3 fw-bolder">
+                                Property Information
+                            </th>
+                            <th class="text-center fs-3 fw-bolder">
+                                Owner Information
+                            </th>
+                        </thead>
+                        <tbody class="text-center fs-4">
+                            <tr>
+                                <td>
+                                    <p class="mb-1 fw-bold">Property: <span
+                                            class="fs-3 text-danger" t-field="o.name" /></p>
+                                    <p class="mb-1 fw-bold">Availability Date: <span
+                                            class="fs-3 text-danger" t-field="o.date_availability" /></p>
+                                    <p class="mb-1 fw-bold">Post Code: <span
+                                            class="fs-3 text-danger" t-field="o.post_code" /></p>
+                                    <p class="mb-1 fw-bold">Status: <span
+                                            class="fs-3 text-danger" t-field="o.state" /></p>
+                                </td>
+                                <td>
+                                    <p class="mb-1 fw-bold">Owner: <span
+                                            class="fs-3 text-danger" t-field="o.owner_id.owner_name" /></p>
+                                    <p class="mb-1 fw-bold">Phone: <span
+                                            class="fs-3 text-danger"
+                                            t-field="o.owner_id.owner_phone" /></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-dark table-hover mt-4">
+                        <thead class="fs-3 fw-bolder">
+                            <tr>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Area
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="fs-4 fw-bold">
+                            <t t-foreach="docs.room_ids" t-as="room">
+                                <tr>
+                                    <td>
+                                        <span t-field="room.room_name" />
+                                    </td>
+                                    <td>
+                                        <span t-field="room.area" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
